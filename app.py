@@ -30,13 +30,6 @@ def download_pdf(url, save_path="downloaded.pdf"):
         file.write(response.content)
     return save_path
 
-# Function to extract text from PDF
-def extract_text_from_pdf(file_path):
-    text = ""
-    with pdfplumber.open(file_path) as pdf:
-        for page in pdf.pages:
-            text += page.extract_text()
-    return text
 
     # Function to extract tables from PDF
 def extract_tables_from_pdf(file_path):
@@ -75,7 +68,7 @@ def chat():
 
     # Download and extract text and tables
     pdf_path = download_pdf(pdf_url)
-    pdf_text = extract_text_from_pdf(pdf_path)  # Extract all text
+  
     pdf_tables = extract_tables_from_pdf(pdf_path)  # Extract tables
     os.remove(pdf_path)
 
@@ -107,7 +100,7 @@ def chat():
         return jsonify({"answer": answer})
 
     # Default behavior for non-table-related questions
-    context = pdf_text
+   
     answer = query_openai(question, context)
     return jsonify({"answer": answer})
 
